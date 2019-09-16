@@ -66,10 +66,10 @@ pour créer le script il faut effectuer cette commande nano testpwd.sh lui ajout
 
 `PASSWORD="MotdePasseTest" PASS_CHECK=""`
 
-######## Ici l'utilisateur rentre le mot de passe 
+######## Ici l'utilisateur rentre le mot de passe <br> 
 `echo "entrez un mot de passe" read PASS_CHECK`
 
-######## Vérification si les deux variables sont pareils 
+######## Vérification si les deux variables sont pareils <br>
 `if[ $PASSWORD = $PASS_CHECK ]; then echo "connecté" else echo "mauvais mot de passe" fi`
 
 On oublie pas de faire chmod u+x testpwd.sh pour rendre le script utilisable 
