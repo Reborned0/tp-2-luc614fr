@@ -62,7 +62,7 @@ dossier personnel d’après bash)_ </b>
 # Exercice 2. Contrôle de mot de passe
 
 pour créer le script il faut effectuer cette commande nano testpwd.sh lui ajouter :
-######## Ici j'initialise les deux variables qui vont me permettre de vérifier les mots de passes .
+######## Ici j'initialise les deux variables qui vont me permettre de vérifier les mots de passe .
 
 `PASSWORD="MotdePasseTest" PASS_CHECK=""`
 
