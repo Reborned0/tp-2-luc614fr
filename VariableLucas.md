@@ -54,7 +54,7 @@ La variable qui a une valeure vide est toujours utilisable tandis que l'utilisat
 10.  <b> _Utilisez la commande echo pour écrire exactement la phrase : $HOME = chemin (où chemin est votre
 dossier personnel d’après bash)_ </b>
 
-echo "\$HOME = $HOME" 
+`echo "\$HOME = $HOME"`
 
 # Programmation Bash
 
