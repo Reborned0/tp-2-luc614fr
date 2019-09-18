@@ -74,7 +74,8 @@ if[ $PASSWORD = $PASS_CHECK ]; then  <br>
   echo "connecté" <br>  
 else  <br> 
   echo "mauvais mot de passe" <br> 
-fi ``` 
+fi 
+``` 
 
 
 On oublie pas de faire chmod u+x testpwd.sh pour rendre le script utilisable
