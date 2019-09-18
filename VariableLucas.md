@@ -149,3 +149,26 @@ fact() {
 echo `fact $1`
 
 ```  
+
+# Exercice 6. Le juste prix 
+```
+#!/bin/sh 
+NOMBRE=$(( ( RANDOM % 100 )  + 1 ))
+USER_NB=-1
+
+
+echo "devinez le nombre que j'ai choisi (entre 1 et 100)"
+while [ $NOMBRE != $USER_NB ]
+do
+        echo $NOMBRE
+        read USER_NB
+
+        if [ $NOMBRE -lt $USER_NB ]; then
+                echo "il est plus petit, recommencez"
+        elif [ $NOMBRE -gt $USER_NB ]; then
+                echo "il est plus grand, recommencez"
+        fi
+done
+
+echo "bravo vous avez trouvé !"
+``` 
