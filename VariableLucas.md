@@ -102,3 +102,31 @@ else
 fi
 
 ``` 
+
+
+# Exercice 4. Contrôle d’utilisateur
+
+```
+#!/bin/bash
+
+INPUT_USER=$1
+FILENAME="${0##*/}"
+USERS=$(cut -d: -f1 /etc/passwd)
+
+if [ -z "$INPUT_USER" ]; then
+        echo "Utilisation: $FILENAME nom_utilisateur"
+else
+        EXIST=0
+        for user in  $USERS
+        do
+                if [ "$user" = "$INPUT_USER" ]; then
+                        echo "l'utilisateur existe"
+                        EXIST=1
+                fi
+        done
+        if [ $EXIST -eq 0 ]; then
+                echo "l'utilisateur n'existe pas"
+        fi
+fi
+
+``` 
