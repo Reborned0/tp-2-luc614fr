@@ -80,7 +80,7 @@ fi
 
 On oublie pas de faire chmod u+x testpwd.sh pour rendre le script utilisable
 
-<b> _ J'ai fait le reste en binôme avec Franck car je n'ai plus de pc chez moi actuellement 
+<b> _ J'ai fait le reste en binôme avec Franck car je n'ai plus de pc chez moi actuellement_ </b>  
 
 # Exercice 3. Expressions rationnelles
 
