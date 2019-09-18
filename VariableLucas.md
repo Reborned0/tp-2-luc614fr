@@ -130,3 +130,22 @@ else
 fi
 
 ``` 
+
+# Exercice 5. Factorielle
+
+``` 
+#!/bin/sh 
+ 
+fact() { 
+        n=$1 
+        if [ $n -eq 0 ] 
+        then 
+                echo 1 
+        else 
+                echo $(( n * `fact $(( n - 1 ))` )) 
+        fi 
+} 
+ 
+echo `fact $1`
+
+```  
