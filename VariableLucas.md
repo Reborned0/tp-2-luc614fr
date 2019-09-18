@@ -172,3 +172,43 @@ done
 
 echo "bravo vous avez trouvé !"
 ``` 
+
+# Exercice 7. Statistiques
+
+```
+#!/bin/sh
+
+keep=1
+i=0
+marks=()
+
+while [ $keep != 0 ]
+do
+        echo "entrez une note"
+        read marks[$i]
+
+        echo "continuer ? o / n"
+        read answer
+        if [ "$answer" = "n" ]; then
+                keep=0;
+        fi
+
+        ((i++))
+done
+
+mini=${marks[0]}
+maxi=${marks[0]}
+moy=0
+for mark in "${marks[@]}"
+do
+        if [[ $mark < $mini ]]; then
+                mini=$mark
+        fi
+        if [[ $mark > $maxi ]]; then
+                maxi=$mark
+        fi
+        ((moy=moy+mark))
+done
+
+echo "le max est $maxi, le min est $mini et la moyenne est de $moy"
+``` 
