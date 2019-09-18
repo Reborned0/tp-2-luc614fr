@@ -64,14 +64,14 @@ dossier personnel d’après bash)_ </b>
 pour créer le script il faut effectuer cette commande nano testpwd.sh lui ajouter : <br>
 
 `
-PASSWORD="MotdePasseTest" 
-PASS_CHECK=""
-echo "entrez un mot de passe" 
-read -s PASS_CHECK
-if[ $PASSWORD = $PASS_CHECK ]; then 
-  echo "connecté" 
-else 
-  echo "mauvais mot de passe" 
-fi`
+PASSWORD="MotdePasseTest" <br>
+PASS_CHECK="" <br>
+echo "entrez un mot de passe"  <br> 
+read -s PASS_CHECK <br> 
+if[ $PASSWORD = $PASS_CHECK ]; then  <br> 
+  echo "connecté" <br>  
+else  <br> 
+  echo "mauvais mot de passe" <br> 
+fi` <br>
 
 On oublie pas de faire chmod u+x testpwd.sh pour rendre le script utilisable
