@@ -66,15 +66,15 @@ pour créer le script il faut effectuer cette commande nano testpwd.sh lui ajout
 ```
 #!/bin/bash
 
-PASSWORD="MotdePasseTest" <br>
-PASS_CHECK="" <br>
-echo "entrez un mot de passe"  <br> 
-read -s PASS_CHECK <br> 
-if[ $PASSWORD = $PASS_CHECK ]; then  <br> 
-  echo "connecté" <br>  
-else  <br> 
-  echo "mauvais mot de passe" <br> 
-fi 
+PASSWORD=password
+read -s -p "Entrer votre mot de passe : " read_PASSWORD
+
+if test $read_PASSWORD = $PASSWORD; then
+        echo "Bon mot de passe"
+else
+        echo "Le mot de passe est incorrect"
+fi
+
 ``` 
 
 
@@ -87,20 +87,21 @@ On oublie pas de faire chmod u+x testpwd.sh pour rendre le script utilisable
 ```
 #!/bin/bash
 
-function is_number(){
- re='^[+-]?[0-9]+([.][0-9]+)?$'
- if ! [[ $1 =~ $re ]] ; then
-  return 1
- else
-  return 0
- fi
+function is_number()
+{
+        re='^[+-]?[0-9]+([.][0-9]+)?$'
+        if ! [[ $1 =~ $re ]] ; then
+                return 1
+        else
+                return 0
+        fi
 }
 
 is_number $1
-if [ "$?" = "0" ]; then
-        echo "c'est un float"
+if [ $? = 0 ] ; then
+        echo "$1 est un nombre"
 else
-        echo "ce n'est pas un float"
+        echo "$1 n'est pas un nombre"
 fi
 
 ``` 
@@ -111,125 +112,116 @@ fi
 ```
 #!/bin/bash
 
-INPUT_USER=$1
-FILENAME="${0##*/}"
-USERS=$(cut -d: -f1 /etc/passwd)
-
-if [ -z "$INPUT_USER" ]; then
-        echo "Utilisation: $FILENAME nom_utilisateur"
+if [ $# = "1" ]; then
+        user_exist=$(grep -c ^$1: /etc/passwd)
 else
-        EXIST=0
-        for user in  $USERS
-        do
-                if [ "$user" = "$INPUT_USER" ]; then
-                        echo "l'utilisateur existe"
-                        EXIST=1
-                fi
-        done
-        if [ $EXIST -eq 0 ]; then
-                echo "l'utilisateur n'existe pas"
-        fi
+        echo "Utilisation : $0 nom_utilisateur"
+        exit
 fi
+
+if [ "$user_exist" = "1" ]; then
+        echo "L'utilisateur $1 existe"
+else
+        echo "L'utilisateur $1 n'existe pas"
+fi
+
 
 ``` 
 
 # Exercice 5. Factorielle
 
 ``` 
-#!/bin/sh 
- 
-fact() { 
-        n=$1 
-        if [ $n -eq 0 ] 
-        then 
-                echo 1 
-        else 
-                echo $(( n * `fact $(( n - 1 ))` )) 
-        fi 
-} 
- 
-echo `fact $1`
+#!/bin/bash
+
+i=1
+fct=1
+
+while [ $i -lt $1 ]
+do
+        ((i++))
+        fct=$(($fct*$i))
+done
+
+echo $fct
+
 
 ```  
 
 # Exercice 6. Le juste prix 
 ```
-#!/bin/sh 
-NOMBRE=$(( ( RANDOM % 100 )  + 1 ))
-USER_NB=-1
+#!/bin/bash
 
+alea=$((1 + RANDOM % 1000))
 
-echo "devinez le nombre que j'ai choisi (entre 1 et 100)"
-while [ $NOMBRE != $USER_NB ]
+while [ true ]
 do
-        echo $NOMBRE
-        read USER_NB
 
-        if [ $NOMBRE -lt $USER_NB ]; then
-                echo "il est plus petit, recommencez"
-        elif [ $NOMBRE -gt $USER_NB ]; then
-                echo "il est plus grand, recommencez"
+        read -p "Entrez un nombre entre 1 et 1000 : " nb
+
+        if [ $nb -lt $alea ]; then
+                echo "Le nombre est plus grand !"
+        elif [ $nb -gt $alea ]; then
+                echo "Le nombre est plus petit !"
+        else
+                echo "Vous avez trouvé le bon nombre, c'est $nb"
+                exit
         fi
 done
 
-echo "bravo vous avez trouvé !"
 ``` 
 
 # Exercice 7. Statistiques
 
 ```
-#!/bin/sh
+#!/bin/bash
 
-function reelounon()
+function is_number()
 {
-        re='^[+-]?[0-9]+([.][0-9]+)?$'
-        if ! [[ $nb =~ $re ]] ; then
+re='^[+-]?[0-9]+([.][0-9]+)?$'
+        if ! [[ $1 =~ $re ]] ; then
                 return 1
         else
                 return 0
         fi
 }
 
-keep=1
-nb=0
-i=0
-marks=()
+arrayValues=()
 
-while [ $keep != 0 ]
+while :
 do
-        echo "entrez une note"
-        read nb
+        echo "Veuillez saisir un nombre à ajouter ou taper \"next\" pour passer à la suite:"
+        read value
 
-        reelounon $nb
-        if [ "$?" != "0" ]; then
-                echo "merci d'entrer que des réels"
-        else
-                marks[$i]=$nb
+        if [ "$value" = "next" ]; then
+                break
         fi
 
-        echo "continuer ? o / n"
-        read answer
-        if [ "$answer" = "n" ]; then
-                keep=0;
-        fi
+        arrayValues+=($value)
 
-        ((i++))
 done
 
-mini=${marks[0]}
-maxi=${marks[0]}
-moy=0
-longueurtableau=${#marks[@]}
-for mark in "${marks[@]}"
+max=-100
+min=100
+total=0
+
+for var in "${arrayValues[@]}"
 do
-        if [[ $mark < $mini ]]; then
-                mini=$mark
+        if [ "$var" -gt "100" ] || [ "$var" -lt "-100" ]; then
+                echo "Veuillez utiliser 3 nombres réelle entre 100 et -100"
+                exit 1
         fi
-        if [[ $mark > $maxi ]]; then
-                maxi=$mark
+
+        if [ $var -gt $max ]; then
+                let max=$var
         fi
-        ((moy=moy+mark))
+
+        if [ $var -lt $min ]; then
+                let min=$var
+        fi
+        
+        let total=total+$var
 done
-moy=$((moy / longueurtableau))
-echo "le max est $maxi, le min est $mini et la moyenne est de $moy"
+
+let average=$total/${#arrayValues[@]}
+echo "Max: $max; Min: $min; Moyenne: $average"
 ``` 
